@@ -17,6 +17,8 @@ namespace WimToets
             {
                 Console.WriteLine(towersList.items[i].utmCoordinates.Easting);
             }
+
+            Console.WriteLine(Calculations.Conversion.calcDistance(towersList.items[0].utmCoordinates, towersList.items[1].utmCoordinates).ToString());
         }
     }
 }

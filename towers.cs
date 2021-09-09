@@ -6,10 +6,10 @@ namespace Towers
     //class for UTM coordinate set
     public class utmSet
     {
-        public float Easting { get; }
-        public float Northing { get; }
+        public double Easting { get; }
+        public double Northing { get; }
 
-        public utmSet(float easting, float northing) {
+        public utmSet(double easting, double northing) {
             Easting = easting;
             Northing = northing;
         }
@@ -18,10 +18,10 @@ namespace Towers
     //class for geocentric coordinate set
     public class geoSet
     {
-        public float Longitude { get; }
-        public float Lat { get; }
+        public double Longitude { get; }
+        public double Lat { get; }
 
-        public geoSet(float longitude, float lat)
+        public geoSet(double longitude, double lat)
         {
             Longitude = longitude;
             Lat = lat;
@@ -38,8 +38,8 @@ namespace Towers
         public Tower(string[] fields)
         {
             ID = fields[0];
-            utmCoordinates = new utmSet(float.Parse(fields[1]), float.Parse(fields[2]));
-            geoCoordinates = new geoSet(float.Parse(fields[3]), float.Parse(fields[4]));
+            utmCoordinates = new utmSet(double.Parse(fields[1]), double.Parse(fields[2]));
+            geoCoordinates = new geoSet(double.Parse(fields[3]), double.Parse(fields[4]));
         }
     }
     public class TowerList
