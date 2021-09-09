@@ -1,23 +1,45 @@
+/*File for towers classes*/
 using System;
 
 namespace Towers
 {
+    //class for UTM coordinate set
+    public class utmSet
+    {
+        public float Easting { get; }
+        public float Northing { get; }
+
+        public utmSet(float easting, float northing) {
+            Easting = easting;
+            Northing = northing;
+        }
+    }
+
+    //class for geocentric coordinate set
+    public class geoSet
+    {
+        public float Longitude { get; }
+        public float Lat { get; }
+
+        public geoSet(float longitude, float lat)
+        {
+            Longitude = longitude;
+            Lat = lat;
+        }
+    }
     public class Tower
     {
         public string ID { get; }
-        public float Easting { get; }
-        public float Northing { get; }
-        public float Longitude { get; }
-        public float Lat { get; }
+
+        public geoSet geoCoordinates { get; }
+
+        public utmSet utmCoordinates { get; }
 
         public Tower(string[] fields)
         {
             ID = fields[0];
-            Console.WriteLine(ID);
-            Easting = float.Parse(fields[1]);
-            Northing = float.Parse(fields[2]);
-            Longitude = float.Parse(fields[3]);
-            Lat = float.Parse(fields[4]);
+            utmCoordinates = new utmSet(float.Parse(fields[1]), float.Parse(fields[2]));
+            geoCoordinates = new geoSet(float.Parse(fields[3]), float.Parse(fields[4]));
         }
     }
     public class TowerList
@@ -25,11 +47,15 @@ namespace Towers
         public Tower[] items { get; }
         public TowerList(string[] towersData)
         {
+            items = new Tower[towersData.Length];
+            var itemCount = 0;
+
             foreach (string towerData in towersData)
             {
                 string[] fields = towerData.Split(',');
                 var newTower = new Tower(fields);
-                //Console.WriteLine(newTower.ID);
+                items[itemCount] = newTower;
+                itemCount++;
             }
         }
     }
