@@ -23,20 +23,57 @@ namespace Calculations
 
         public static void printArr(double[] arr)
         {
-            foreach (var item in arr)
+            foreach (int item in arr)
             {
-                Console.WriteLine(item);
+                Console.Write(item + ",");
+            }
+            Console.Write('\n');
+        }
+
+        public static void printArrI(int[] arr)
+        {
+            foreach (int item in arr)
+            {
+                Console.Write(item + ",");
+            }
+            Console.Write('\n');
+        }
+
+        public class edgeList
+        {
+            public int[,] Edges { get; }
+
+            public int[] VerticeIndexes { get; }
+
+            public edgeList(int[,] edges, int[] indexes)
+            {
+                Edges = edges;
+                VerticeIndexes = indexes;
             }
         }
 
-        public static int[,] assignEdges(Towers.TowerList towerList)
+        public static int[] orderVertices(double[] minDistances)
+        {
+            int numVertices = minDistances.Length;
+            int[] indexes = new int[numVertices];
+            
+            for (int i = 0; i < numVertices; i++)
+            {
+                indexes[i] = i;
+            }
+
+            Array.Sort(minDistances, indexes);
+
+            return indexes;
+        }
+
+        public static edgeList assignEdges(Towers.TowerList towerList)
         {
             int numVertices = towerList.items.Length;
             Towers.Tower[] vertices = towerList.items;
 
             int[,] edges = new int[numVertices, numVertices];
-            double startDistance = Double.PositiveInfinity;
-            int startIndex = 0;
+            double[] minDistances = new double[numVertices];
 
             for (int iVertice = 0; iVertice < numVertices; iVertice++)
             {
@@ -52,28 +89,30 @@ namespace Calculations
                 double maxDistance = arrayFunctions.findValues.findMax(distances);
                 distances[iVertice] = maxDistance;
 
+                bool firstMin = true;
+
                 for (int iEdge = 0; iEdge < numEdges; iEdge++)
                 {
-                    // find minimum distance and add edge between that tower and reference
-                    int minIndex = Array.IndexOf(distances, arrayFunctions.findValues.findMin(distances));
+                    double minDistance = arrayFunctions.findValues.findMin(distances);
 
-                    if (startDistance > distances[minIndex])
+                    if (firstMin == true)
                     {
-                        startDistance = distances[minIndex];
-                        startIndex = iVertice;
+                        firstMin = false;
+                        minDistances[iVertice] = minDistance;
                     }
+
+                    int minIndex = Array.IndexOf(distances, minDistance);
 
                     edges[iVertice, minIndex] = 1;
                     //edges[minIndex, iVertice] = 1;
 
                     distances[minIndex] = maxDistance;
                 }
-
-                var edgeRow = arrayFunctions.findValues.getIntRow(edges, iVertice);
-                var edgeHold = Array.ConvertAll(edgeRow, item => (double)item);
             }
 
-            return edges;
+            edgeList result = new edgeList(edges, orderVertices(minDistances));
+
+            return result;
         }
 
         public static int getFurthestFreq(int currentFreq)
@@ -103,26 +142,30 @@ namespace Calculations
             return frequency;
         }
 
-        public static int[] assignFrequencies(int[,] edges)
+        public static int[] assignFrequencies(edgeList edgeList)
         {
-            int numTowers = edges.GetLength(0);
+            int numTowers = edgeList.Edges.GetLength(0);
             int[] frequencies = new int[numTowers];
+            int[] orderedIndexes = edgeList.VerticeIndexes;
+            printArrI(orderedIndexes);
 
             // assign first tower with edge of frequency range
-            frequencies[0] = freqRange[0];
+            frequencies[orderedIndexes[0]] = freqRange[0];
 
             for (int iVertice = 1; iVertice < numTowers; iVertice++)
             {
-                int[] verticeEdges = arrayFunctions.findValues.getIntRow(edges, iVertice);
+                int[] verticeEdges = arrayFunctions.findValues.getIntRow(edgeList.Edges, orderedIndexes[iVertice]);
                 int edgeIndex = Array.IndexOf(verticeEdges, 1);
-
+                Console.WriteLine(orderedIndexes[iVertice]);
                 if (frequencies[edgeIndex] == 0)
                 {
-                    frequencies[iVertice] = getRandFreq();
+                    frequencies[orderedIndexes[iVertice]] = getRandFreq();
+                    
+                    Console.WriteLine("Random");
                 }
                 else
                 {
-                    frequencies[iVertice] = getFurthestFreq(frequencies[edgeIndex]);
+                    frequencies[orderedIndexes[iVertice]] = getFurthestFreq(frequencies[edgeIndex]);
                 }
             }
 
