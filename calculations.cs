@@ -21,7 +21,7 @@ namespace Calculations
 
     public static class graphColor
     {
-        public static int numEdges = 2;
+        public static int numEdges = 1;
         public static int[] freqRange = new int[] { 110, 115 };
 
         public static void printArr(double[] arr)
@@ -32,19 +32,7 @@ namespace Calculations
             }
         }
 
-        public class edgeList
-        {
-            public int[,] items { get; }
-            public int startIndex { get; }
-
-            public edgeList(int[,] itemList, int index)
-            {
-                items = itemList;
-                startIndex = index;
-            }
-        }
-
-        public static edgeList assignEdges(Towers.TowerList towerList)
+        public static int[,] assignEdges(Towers.TowerList towerList)
         {
             int numVertices = towerList.items.Length;
             Towers.Tower[] vertices = towerList.items;
@@ -90,42 +78,73 @@ namespace Calculations
                 //printArr(edgeHold);
             }
 
-            edgeList result = new edgeList(edges, startIndex);
-
-            return result;
+            return edges;
         }
 
-        public static int findFurthestFreqs(int currentFreq, int[] freqRange)
+        public static int getFurthestFreq(int currentFreq)
         {
             int furthestFreq = currentFreq;
-            int freqDifference = 0;
+            int oldDifference = 0;
 
             for (int i = freqRange[0]; i <= freqRange[1]; i++)
             {
-                freqDifference = Math.Abs(i - currentFreq);
-                furthestFreq = Math.Abs(furthestFreq - currentFreq) < freqDifference ? i : furthestFreq;
+                int newDifference = Math.Abs(i - currentFreq);
+
+                if (newDifference > oldDifference)
+                {
+                    oldDifference = newDifference;
+                    furthestFreq = i;
+                }
             }
 
             return furthestFreq;
         }
 
-        public static int[] assignFrequencies(edgeList edges)
+        public static int getRandFreq()
         {
-            int numTowers = edges.items.GetLength(0);
+            Random random = new Random();
+            int frequency = random.Next(freqRange[0], freqRange[1] + 1);
+
+            return frequency;
+        }
+
+        public static int[] assignFrequencies(int[,] edges)
+        {
+            int numTowers = edges.GetLength(0);
             int[] frequencies = new int[numTowers];
-            Console.WriteLine(freqRange[1] - freqRange[0]);
 
-            // assign frequency to starting vertice
-            frequencies[edges.startIndex] = freqRange[0];
+            // assign first tower with edge of frequency range
+            frequencies[0] = freqRange[0];
 
-            int[] currentEdges = arrayFunctions.findValues.getIntRow(edges.items, edges.startIndex);
-
-            // assign frequencies until all towers are done
-            while (Array.IndexOf(frequencies, 0) != -1)
+            for (int iVertice = 1; iVertice < numTowers; iVertice++)
             {
-                int nextTowerIndex = Array.IndexOf(currentEdges, 1);
-                Console.WriteLine(nextTowerIndex);
-                currentEdges[nextTowerIndex] = 0;
+                int[] verticeEdges = arrayFunctions.findValues.getIntRow(edges, iVertice);
+                int edgeIndex = Array.IndexOf(verticeEdges, 1);
+
+                if (frequencies[edgeIndex] == 0)
+                {
+                    frequencies[iVertice] = getRandFreq();
+                }
+                else
+                {
+                    frequencies[iVertice] = getFurthestFreq(frequencies[edgeIndex]);
+                }
+
+                Console.Write(iVertice);
+                Console.Write(',');
+                Console.Write(edgeIndex);
+                Console.Write("\n");
+
+                foreach (int display in verticeEdges)
+                {
+                    Console.Write(display + ",");
+                }
+                Console.Write('\n');
+                foreach (int display in frequencies)
+                {
+                    Console.Write(display + ",");
+                }
+                Console.Write('\n');
             }
 
             return frequencies;

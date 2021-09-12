@@ -16,7 +16,8 @@ namespace WimToets
             var edges = Calculations.graphColor.assignEdges(towersList);
 
             var frequencies = Calculations.graphColor.assignFrequencies(edges);
-            Console.WriteLine(frequencies.Length);
+            
+            towersList.plotFrequencies(frequencies);
         }
     }
 }
