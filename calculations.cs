@@ -5,9 +5,6 @@ namespace Calculations
 {
     public static class Conversion
     {
-        // amount of metres in lattitude/longitude degree
-        public const double mDegreesConv = 111000;
-
         public static double calcDistance(Towers.utmSet pos1, Towers.utmSet pos2)
         {
             double xDistance = Math.Abs(pos1.Easting - pos2.Easting);
@@ -43,7 +40,6 @@ namespace Calculations
 
             for (int iVertice = 0; iVertice < numVertices; iVertice++)
             {
-                //Console.WriteLine("Vertice {0}", iVertice);
                 double[] distances = new double[numVertices];
                 Towers.Tower refVertice = vertices[iVertice];
 
@@ -75,7 +71,6 @@ namespace Calculations
 
                 var edgeRow = arrayFunctions.findValues.getIntRow(edges, iVertice);
                 var edgeHold = Array.ConvertAll(edgeRow, item => (double)item);
-                //printArr(edgeHold);
             }
 
             return edges;
@@ -129,22 +124,6 @@ namespace Calculations
                 {
                     frequencies[iVertice] = getFurthestFreq(frequencies[edgeIndex]);
                 }
-
-                Console.Write(iVertice);
-                Console.Write(',');
-                Console.Write(edgeIndex);
-                Console.Write("\n");
-
-                foreach (int display in verticeEdges)
-                {
-                    Console.Write(display + ",");
-                }
-                Console.Write('\n');
-                foreach (int display in frequencies)
-                {
-                    Console.Write(display + ",");
-                }
-                Console.Write('\n');
             }
 
             return frequencies;

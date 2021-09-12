@@ -130,7 +130,6 @@ namespace Towers
                         itemEastings[iItem] = eastings[itemIndexes[iItem]];
                         itemNorthings[iItem] = northings[itemIndexes[iItem]];
                     }
-                    Console.WriteLine(currentFrequency);
                     plot.AddScatter(itemEastings, itemNorthings, lineWidth: 0, label: currentFrequency.ToString());
                 }
             }
