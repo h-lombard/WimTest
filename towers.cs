@@ -45,6 +45,7 @@ namespace Towers
     public class TowerList
     {
         public Tower[] items { get; }
+
         public TowerList(string[] towersData)
         {
             items = new Tower[towersData.Length];

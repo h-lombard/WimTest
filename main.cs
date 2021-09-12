@@ -13,12 +13,10 @@ namespace WimToets
 
             var towersList = new Towers.TowerList(towersInfo);
 
-            for (int i = 0; i < towersList.items.Length; i++)
-            {
-                Console.WriteLine(towersList.items[i].utmCoordinates.Easting);
-            }
+            var edges = Calculations.graphColor.assignEdges(towersList);
 
-            Console.WriteLine(Calculations.Conversion.calcDistance(towersList.items[0].utmCoordinates, towersList.items[1].utmCoordinates).ToString());
+            var frequencies = Calculations.graphColor.assignFrequencies(edges);
+            Console.WriteLine(frequencies.Length);
         }
     }
 }
