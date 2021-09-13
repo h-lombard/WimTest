@@ -18,7 +18,7 @@ namespace Calculations
 
     public static class graphColor
     {
-        public static int numEdges = 1;
+        public static int numEdges = 6;
         public static int[] freqRange = new int[] { 110, 115 };
 
         public static void printArr(double[] arr)
@@ -56,7 +56,7 @@ namespace Calculations
         {
             int numVertices = minDistances.Length;
             int[] indexes = new int[numVertices];
-            
+
             for (int i = 0; i < numVertices; i++)
             {
                 indexes[i] = i;
@@ -115,19 +115,30 @@ namespace Calculations
             return result;
         }
 
-        public static int getFurthestFreq(int currentFreq)
+        public static int getFurthestFreq(int[] edges, int[] frequencies)
         {
-            int furthestFreq = currentFreq;
-            int oldDifference = 0;
+            int largestDifference = 0;
+            int furthestFreq = 0;
 
-            for (int i = freqRange[0]; i <= freqRange[1]; i++)
+            for (int frequency = freqRange[0]; frequency < freqRange[1] + 1; frequency++)
             {
-                int newDifference = Math.Abs(i - currentFreq);
-
-                if (newDifference > oldDifference)
+                int oldDifference = int.MaxValue;
+                for (int i = 0; i < edges.Length; i++)
                 {
-                    oldDifference = newDifference;
-                    furthestFreq = i;
+                    if ((edges[i] != 0) & (frequencies[i] != 0))
+                    {
+                        int newDifference = Math.Abs(frequency - frequencies[i]);
+                        if (newDifference < oldDifference)
+                        {
+                            oldDifference = newDifference;
+                        }
+                    }
+                }
+
+                if (oldDifference > largestDifference)
+                {
+                    furthestFreq = frequency;
+                    largestDifference = oldDifference;
                 }
             }
 
@@ -142,30 +153,41 @@ namespace Calculations
             return frequency;
         }
 
+        public static bool checkEdges(int[] edges, int[] frequencies)
+        {
+            bool flag = false;
+
+            for (int i = 0; i < edges.Length; i++)
+            {
+                if ((edges[i] == 1) & (frequencies[i] != 0))
+                {
+                    flag = true;
+                }
+            }
+
+            return flag;
+        }
+
         public static int[] assignFrequencies(edgeList edgeList)
         {
             int numTowers = edgeList.Edges.GetLength(0);
             int[] frequencies = new int[numTowers];
             int[] orderedIndexes = edgeList.VerticeIndexes;
-            printArrI(orderedIndexes);
 
             // assign first tower with edge of frequency range
-            frequencies[orderedIndexes[0]] = freqRange[0];
+            //frequencies[orderedIndexes[0]] = freqRange[0];
 
-            for (int iVertice = 1; iVertice < numTowers; iVertice++)
+            for (int iVertice = 0; iVertice < numTowers; iVertice++)
             {
                 int[] verticeEdges = arrayFunctions.findValues.getIntRow(edgeList.Edges, orderedIndexes[iVertice]);
-                int edgeIndex = Array.IndexOf(verticeEdges, 1);
-                Console.WriteLine(orderedIndexes[iVertice]);
-                if (frequencies[edgeIndex] == 0)
+
+                if (!checkEdges(verticeEdges, frequencies))
                 {
-                    frequencies[orderedIndexes[iVertice]] = getRandFreq();
-                    
-                    Console.WriteLine("Random");
+                    frequencies[orderedIndexes[iVertice]] = 110;
                 }
                 else
                 {
-                    frequencies[orderedIndexes[iVertice]] = getFurthestFreq(frequencies[edgeIndex]);
+                    frequencies[orderedIndexes[iVertice]] = getFurthestFreq(verticeEdges, frequencies);
                 }
             }
 
