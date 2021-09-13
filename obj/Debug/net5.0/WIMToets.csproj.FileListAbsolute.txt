@@ -1,0 +1,16 @@
+/home/herman/WIMToets/obj/Debug/net5.0/WIMToets.csprojAssemblyReference.cache
+/home/herman/WIMToets/obj/Debug/net5.0/WIMToets.GeneratedMSBuildEditorConfig.editorconfig
+/home/herman/WIMToets/obj/Debug/net5.0/WIMToets.AssemblyInfoInputs.cache
+/home/herman/WIMToets/obj/Debug/net5.0/WIMToets.AssemblyInfo.cs
+/home/herman/WIMToets/obj/Debug/net5.0/WIMToets.csproj.CoreCompileInputs.cache
+/home/herman/WIMToets/bin/Debug/net5.0/WIMToets
+/home/herman/WIMToets/bin/Debug/net5.0/WIMToets.deps.json
+/home/herman/WIMToets/bin/Debug/net5.0/WIMToets.runtimeconfig.json
+/home/herman/WIMToets/bin/Debug/net5.0/WIMToets.runtimeconfig.dev.json
+/home/herman/WIMToets/bin/Debug/net5.0/WIMToets.dll
+/home/herman/WIMToets/bin/Debug/net5.0/ref/WIMToets.dll
+/home/herman/WIMToets/bin/Debug/net5.0/WIMToets.pdb
+/home/herman/WIMToets/obj/Debug/net5.0/WIMToets.dll
+/home/herman/WIMToets/obj/Debug/net5.0/ref/WIMToets.dll
+/home/herman/WIMToets/obj/Debug/net5.0/WIMToets.pdb
+/home/herman/WIMToets/obj/Debug/net5.0/WIMToets.genruntimeconfig.cache

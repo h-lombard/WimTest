@@ -139,7 +139,7 @@ namespace Towers
             plot.XLabel("Easting");
             plot.YLabel("Northing");
 
-            plot.SaveFig("../../../../FrequencyResult.png");
+            plot.SaveFig("FrequencyResult.png");
         }
     }
 }
