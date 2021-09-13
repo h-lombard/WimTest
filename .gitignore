@@ -1,3 +1,5 @@
 .vscode
+bin/Debug
+obj/Debug
 todo.txt
 main.exe
