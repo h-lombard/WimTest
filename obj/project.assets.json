@@ -64,7 +64,7 @@
         }
       }
     },
-    "net5.0/win-x86": {
+    "net5.0/linux-x64": {
       "Microsoft.NETCore.Platforms/5.0.0": {
         "type": "package",
         "compile": {
@@ -83,7 +83,7 @@
           "ref/netstandard2.0/_._": {}
         },
         "runtime": {
-          "runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.dll": {}
+          "lib/netstandard2.0/Microsoft.Win32.SystemEvents.dll": {}
         }
       },
       "ScottPlot/4.1.20": {
@@ -107,7 +107,7 @@
           "ref/netcoreapp3.0/System.Drawing.Common.dll": {}
         },
         "runtime": {
-          "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.dll": {}
+          "runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll": {}
         }
       }
     }
@@ -290,15 +290,15 @@
         "warn": true,
         "downloadDependencies": [
           {
-            "name": "Microsoft.AspNetCore.App.Runtime.win-x86",
+            "name": "Microsoft.AspNetCore.App.Runtime.linux-x64",
             "version": "[5.0.9, 5.0.9]"
           },
           {
-            "name": "Microsoft.NETCore.App.Host.win-x86",
+            "name": "Microsoft.NETCore.App.Host.linux-x64",
             "version": "[5.0.9, 5.0.9]"
           },
           {
-            "name": "Microsoft.NETCore.App.Runtime.win-x86",
+            "name": "Microsoft.NETCore.App.Runtime.linux-x64",
             "version": "[5.0.9, 5.0.9]"
           }
         ],
@@ -311,7 +311,7 @@
       }
     },
     "runtimes": {
-      "win-x86": {
+      "linux-x64": {
         "#import": []
       }
     }

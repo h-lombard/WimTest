@@ -7,7 +7,7 @@ namespace WimToets
     {
         static void Main(string[] args)
         {
-            string filePath = "towers.csv";
+            string filePath = "../../../../towers.csv";
 
             string[] towersInfo = System.IO.File.ReadAllLines(filePath)[1..];
 
